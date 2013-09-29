@@ -18,3 +18,5 @@ There's also a generator for convenience:
 
     for num in random_nums(3):
         print num['outputValue']
+
+(Note, as the documentation says, *WARNING: DO NOT USE BEACON GENERATED VALUES AS SECRET CRYPTOGRAPHIC KEYS.*)
