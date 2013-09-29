@@ -19,6 +19,9 @@ class Beacon(object):
         self.last_timestamp = None
 
     def current_record(self, timestamp=None):
+        """
+        current_record: get the record closest in time to this timestamp
+        """
         if not timestamp:
             timestamp = self.last_timestamp
 
@@ -30,6 +33,9 @@ class Beacon(object):
 
 
     def previous_record(self, timestamp=None):
+        """
+        previous_record: get the record preceding the timestamp
+        """
         if not timestamp:
             timestamp = self.last_timestamp
 
@@ -40,6 +46,9 @@ class Beacon(object):
         return self._call(url)
 
     def next_record(self, timestamp=None):
+        """
+        next_record: get the record following the timestamp
+        """
         if not timestamp:
             timestamp = self.last_timestamp
 
@@ -50,13 +59,29 @@ class Beacon(object):
         return self._call(url)
 
     def last_record(self):
+        """
+        last_record: get the most recent random record
+        """
         url = BASE_URL + "last"
         return self._call(url)
 
     def start_chain_record(self, timestamp=None):
+        """
+        start_chain_record: NOTE I'm not entirely sure what this does, the NIST docs are unenlightening
+        """
+        if not timestamp:
+            timestamp = self.last_timestamp
+
+        if not timestamp:
+            raise BeaconError("No timestamp specified")
+
         url = BASE_URL + "start-chain/" + timestamp
+        return self._call(url)
 
     def _call(self, url):
+        """
+        utility function, does the actually https call and parse the results
+        """
         u = urllib.urlopen(url)
         result = u.read()
         
@@ -82,7 +107,5 @@ def random_nums(n):
 
 
 if __name__ == '__main__':
-    #b = Beacon()
-    #print b.current_record('1380418860')
-    for rand_num in moar_randomness(3):
-        print rand_num
+    b = Beacon()
+    print b.previous_record('1380418860')
