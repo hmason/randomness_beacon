@@ -74,7 +74,6 @@ class Beacon(object):
 
         if not timestamp:
             raise BeaconError("No timestamp specified")
-
         url = BASE_URL + "start-chain/" + timestamp
         return self._call(url)
 
@@ -91,6 +90,9 @@ class Beacon(object):
             data[child.tag] = child.text
 
         self.last_timestamp = data.get('timeStamp', None)
+
+        if not data.get('timestamp', None):
+            raise BeaconError("No data returned. Perhaps the government is down.")
 
         return data
 
