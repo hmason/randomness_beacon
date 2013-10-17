@@ -91,7 +91,7 @@ class Beacon(object):
 
         self.last_timestamp = data.get('timeStamp', None)
 
-        if not data.get('timestamp', None):
+        if not data.get('timeStamp', None):
             raise BeaconError("No data returned. Perhaps the government is down.")
 
         return data
